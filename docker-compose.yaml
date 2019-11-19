@@ -1,0 +1,40 @@
+version: '3.3'
+
+services:
+  drone-server:
+    container_name: drone_server
+    image: drone/drone:1
+    ports:
+      - 80:80
+    volumes:
+      - /var/lib/drone:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: always
+    environment:
+      - DRONE_GITHUB_SERVER=https://github.com
+      - DRONE_GITHUB_CLIENT_ID=db216bc5402304023b9e
+      - DRONE_GITHUB_CLIENT_SECRET=ec3811dcf619d3dcce78dca05ab9b12e653ae1e3
+      - DRONE_AGENTS_ENABLED=true
+      - DRONE_RPC_SECRET=77301a8d509b1c8d7bca11c9796f2500
+      - DRONE_SERVER_HOST=https://girdhar07.pagekite.me/
+      - DRONE_SERVER_PROTO=https
+      - DRONE_TLS_AUTOCERT=true
+      - DRONE_USER_CREATE=username:g07ece,admin:true
+      - DRONE_LOGS_TRACE=true
+      - DRONE_LOGS_PRETTY=true
+      - DRONE_LOGS_COLOR=true
+
+  drone-agent:
+    container_name: drone_agent
+    image: drone/agent:1
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: always
+    environment:
+      - DRONE_RPC_HOST=drone-server
+      - DRONE_RPC_SECRET=77301a8d509b1c8d7bca11c9796f2500
+      - DRONE_RUNNER_CAPACITY=1
+      - DRONE_RUNNER_NAME=<creative name for your build agent>
+      - DRONE_LOGS_TRACE=true
+      - DRONE_LOGS_PRETTY=true
+      - DRONE_LOGS_COLOR=true
