@@ -10,11 +10,20 @@ steps:
   commands:
   - echo -n "$(git log --pretty=format:'%h' -n 1)" >> .tags
   - cat .tags
+  - echo " "
+  - echo ${DRONE_TAG"
+  when:
+          event:
+                  - push
+                  - tag
+
+
 
 - name: git-tag-latest
   image: alpine/git
   commands:
   - echo -n ",latest" >> .tags
   - cat .tags
+  - echo " "
   - echo ${DRONE_TAG}
 
