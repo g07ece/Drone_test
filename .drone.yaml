@@ -12,12 +12,6 @@ steps:
   - cat .tags
   - echo " "
   - echo ${DRONE_TAG"
-  when:
-          event:
-                  - push
-                  - tag
-
-
 
 - name: git-tag-latest
   image: alpine/git
