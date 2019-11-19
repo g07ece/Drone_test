@@ -9,17 +9,12 @@ steps:
   image: alpine/git
   commands:
   - echo -n "$(git log --pretty=format:'%h' -n 1)" >> .tags
-  when:
-    event:
-    - push
-    - tag
+  - cat .tags
 
 - name: git-tag-latest
   image: alpine/git
   commands:
   - echo -n ",latest" >> .tags
-  when:
-    branch:
-      include:
-      - master
+  - cat .tags
+  - echo ${DRONE_TAG}
 
